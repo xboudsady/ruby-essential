@@ -45,11 +45,27 @@ class Animal
     end
 end
 
+# Created Sub Class of Cow
 
 class Cow < Animal
-
+    def color
+        "The cow's color is #{@color}."
+    end
+    def color
+        "My color is #{@color}."
+    end
 end
 
+
+# Created a Sub class of Pig
+
+class Pig < Animal
+    def noise
+        parent_noise = super
+        return "Hello and also #{parent_noise}"
+        
+    end
+end
 
 
 Animal.species = ['frog', 'fish']
@@ -70,7 +86,12 @@ puts animal2.color
 puts Animal.current_animals.inspect
 
 
-maisie = Cow.new("Moo!")
+maisie = Cow.create_with_attributes("Moo!", "yellow")
 puts maisie.noise
 puts animal1.class
 puts maisie.class
+puts maisie.color
+
+
+wilbur = Pig.new("Oink!")
+puts wilbur.noise
