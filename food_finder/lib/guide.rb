@@ -1,7 +1,15 @@
+# Loads our restaurant class
 require 'restaurant'
 
 class Guide
+    
+    # Configuration informationa bout the guide
+    class Config
+        @@action = ['list', 'find', 'add', 'quit']
+        def self.actions; @@action; end
+    end
 
+    # Default initialization funciton to check for existing restaurant files
     def initialize(path=nil)
         # locate the restaurant text file at path
         Restaurant.filepath = path
@@ -17,18 +25,34 @@ class Guide
         end
     end
 
+    # Launche the application
     def launch!
+        # Call the introduction function
         introduction
         # action loop
         result = nil
+        # Loop until user type in 'quit'
         until result == :quit
-            #   what do you wan to do? (list, find, add, quit)
-            print "> "
-            user_response = gets.chomp
-            #   do that action
-            result = do_action(user_response)
+            # create variable to store our action
+            action = get_action
+            result = do_action(action)
         end
         conclusion
+    end
+
+    # Get user input
+    def get_action
+        # Sets our default action
+        action = nil
+        # Keep asking for user input until we get a valid action
+        until Guide::Config.actions.include?(action)
+            puts "Actions: " + Guide::Config.actions.join(", ") if action
+            print "> "
+            user_response = gets.chomp
+            action = user_response.downcase.strip
+            # Return its value of user input
+        end
+        return action 
     end
 
     def do_action(action)
